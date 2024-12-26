@@ -1,0 +1,6 @@
+- probar api:
+    moneda invalida
+    cantidad invalida
+- dockerizar aplicacion
+- correr test
+- agregar log4j
