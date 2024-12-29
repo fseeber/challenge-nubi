@@ -1,6 +1,16 @@
 - probar api:
-    moneda invalida
-    cantidad invalida
+    - moneda invalida
+    - cantidad invalida
+    - Validar que los datos ingresados por el usuario sean correctos
 - dockerizar aplicacion
 - correr test
 - agregar log4j
+- agregar readme:
+    mvn clean package
+    docker build -t currency-converter:latest .
+    docker run -p 8080:8080 currency-converter:latest
+
+- agregar swagger
+- collection en postman
+
+
