@@ -22,9 +22,9 @@ Convierte una cantidad de una moneda base a una moneda destino.
   "targetCurrency": "EUR",
   "amount": 100.0
 }
-Respuesta (JSON)
-json
-Copiar código
+
+#### Request Body (JSON)
+```json
 {
   "baseCurrency": "USD",
   "targetCurrency": "EUR",
@@ -32,11 +32,11 @@ Copiar código
   "convertedAmount": 84.32,
   "timestamp": "2024-12-29 12:00:00 PM"
 }
-2. /liveRates (GET)
+####2. /liveRates (GET)
 Obtiene las tasas de cambio actuales para diversas monedas.
 
-Respuesta (JSON)
-json
+####Respuesta (JSON)
+```json
 Copiar código
 {
   "base": "USD",
@@ -45,41 +45,24 @@ Copiar código
     "GBP": 0.73855
   }
 }
-Configuración
+####Configuración
 Obten tu clave API en exchangerate.host y reemplaza en el archivo LiveResponseDemo.java:
 
-java
-Copiar código
-public static final String ACCESS_KEY = "tu_clave_de_acceso";
-Dependencias: Usa el siguiente fragmento en tu pom.xml:
 
-xml
-Copiar código
-<dependency>
-    <groupId>org.apache.httpcomponents</groupId>
-    <artifactId>httpclient</artifactId>
-    <version>4.5.13</version>
-</dependency>
-<dependency>
-    <groupId>org.json</groupId>
-    <artifactId>json</artifactId>
-    <version>20210307</version>
-</dependency>
-Cómo ejecutar
+####Cómo ejecutar
 Clona el repositorio y ejecuta el proyecto con Maven:
 
-bash
-Copiar código
+```bash
 mvn spring-boot:run
+
 Realiza solicitudes a la API usando Postman o similar.
 
-Ejemplo con Postman
+####Ejemplo con Postman
 1. Convertir divisas
 Método: POST
 URL: http://localhost:8080/convertCurrency
 Cuerpo (JSON):
-json
-Copiar código
+```json
 {
   "baseCurrency": "USD",
   "targetCurrency": "EUR",
