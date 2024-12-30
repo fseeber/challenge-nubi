@@ -1,7 +1,4 @@
-- probar api:
-    - moneda invalida
-    - cantidad invalida
-    - Validar que los datos ingresados por el usuario sean correctos
+
 - correr test
 - agregar log4j
 - agregar readme:

@@ -5,7 +5,6 @@ public class CurrencyConversionRequest {
     private String baseCurrency;
     private String targetCurrency;
 
-    // Getters y Setters
     public double getAmount() {
         return amount;
     }
