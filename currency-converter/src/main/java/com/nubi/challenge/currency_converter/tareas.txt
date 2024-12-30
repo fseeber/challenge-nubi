@@ -2,15 +2,20 @@
     - moneda invalida
     - cantidad invalida
     - Validar que los datos ingresados por el usuario sean correctos
-- dockerizar aplicacion
 - correr test
 - agregar log4j
 - agregar readme:
     mvn clean package
     docker build -t currency-converter:latest .
     docker run -p 8080:8080 currency-converter:latest
+    docker exec -it <container-id> /bin/bash
+    cat /app/logs/application.log
+    mvn spring-boot:run
 
-- agregar swagger
+
+http://localhost:8080/swagger-ui.html#
+
+
 - collection en postman
 
 

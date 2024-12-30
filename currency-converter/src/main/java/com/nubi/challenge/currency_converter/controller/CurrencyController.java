@@ -1,31 +1,29 @@
 package com.nubi.challenge.currency_converter.controller;
 
+import com.nubi.challenge.currency_converter.service.CurrentService;
+import com.nubi.challenge.currency_converter.model.CurrencyConversionRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.nubi.challenge.currency_converter.model.ConversionRequest;
-import com.nubi.challenge.currency_converter.service.CurrencyService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/currency")
+@RequestMapping("/convert")
 public class CurrencyController {
 
-    private final CurrencyService currencyService;
+    @Autowired
+    private CurrentService currencyService;
 
-    public CurrencyController(CurrencyService currencyService) {
-        this.currencyService = currencyService;
-    }
-
-    @PostMapping("/convert")
-    public ResponseEntity<Double> convertCurrency(@RequestBody ConversionRequest request) {
+    // Endpoint para convertir divisas con POST
+    @PostMapping
+    public ResponseEntity<String> convertCurrency(@RequestBody CurrencyConversionRequest request) {
         try {
-            double result = currencyService.convertCurrency(request);
-            return ResponseEntity.ok(result);
+            // Llamamos al servicio que realiza la conversión
+            String conversionResult = currencyService.convertCurrency(request.getBaseCurrency(), request.getTargetCurrency(), request.getAmount());
+            // Devolvemos el resultado de la conversión
+            return ResponseEntity.ok(conversionResult);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
+            // En caso de error, retornamos un mensaje adecuado
+            return ResponseEntity.status(500).body("Error en la conversión: " + e.getMessage());
         }
     }
 }
