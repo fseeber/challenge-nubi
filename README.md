@@ -31,11 +31,11 @@ Convierte una cantidad de una moneda base a una moneda destino.
   "timestamp": "2024-12-29 12:00:00 PM"
 }
 
-####Configuración
+#### Configuración
 Obten tu clave API en exchangerate.host y reemplaza en el archivo LiveResponseDemo.java:
 
 
-####Cómo ejecutar
+#### Cómo ejecutar
 Clona el repositorio y ejecuta el proyecto con Maven:
 
 ```bash
@@ -43,7 +43,7 @@ mvn spring-boot:run
 
 Realiza solicitudes a la API usando Postman o similar.
 
-### Ejemplop Postman
+#### Ejemplop Postman
 1. Convertir divisas
 Método: POST
 URL: http://localhost:8080/convertCurrency
