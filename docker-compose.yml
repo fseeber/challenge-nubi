@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  currency-converter:
+    build:
+      context: .                # El contexto es el directorio actual donde está el Dockerfile
+      dockerfile: Dockerfile     # Especificamos el Dockerfile a usar
+    ports:
+      - "8080:8080"              # Mapea el puerto 8080 del contenedor al 8080 de tu máquina local
+    volumes:
+      - ./target:/app/target     # Mapea la carpeta 'target' en tu máquina local al contenedor
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod # Puedes definir variables de entorno si las necesitas
+    restart: always              # Reinicia el contenedor automáticamente si se cae
