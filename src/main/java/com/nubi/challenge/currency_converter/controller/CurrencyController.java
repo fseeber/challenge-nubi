@@ -1,5 +1,7 @@
 package com.nubi.challenge.currency_converter.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,8 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("/convert")
 @Api(value = "Convert", description = "Endpoint para conversión de monedas")
 public class CurrencyController {
+    
+    private static final Logger logger = LoggerFactory.getLogger(CurrencyController.class);
 
     @Autowired
     private CurrentService currencyService;
@@ -35,15 +39,23 @@ public class CurrencyController {
     @PostMapping
     public ResponseEntity<String> convertCurrency(@RequestBody CurrencyConversionRequest request) {
         try {
+            if (request.getAmount() <= 0) {
+                logger.warn("El monto proporcionado es menor o igual a cero: {}", request.getAmount());
+            }
             String conversionResult = currencyService.convertCurrency(request.getBaseCurrency(), request.getTargetCurrency(), request.getAmount());
+            logger.debug("Resultado de conversión: {}", conversionResult);
             return ResponseEntity.ok(conversionResult);
-        }catch (InvalidAmountException e) {
+        } catch (InvalidAmountException e) {
+            logger.warn("Monto inválido proporcionado: {}", request.getAmount(), e);
             return ResponseEntity.status(400).body(e.getMessage());
-        }catch (InvalidCurrencyException e) {
+        } catch (InvalidCurrencyException e) {
+            logger.warn("Moneda inválida: {} o {}", request.getBaseCurrency(), request.getTargetCurrency(), e);
             return ResponseEntity.status(400).body(e.getMessage());
-        }catch (ApiTimeoutException e) {
-            return ResponseEntity.status(504).body(e.getMessage()); 
+        } catch (ApiTimeoutException e) {
+            logger.error("Tiempo de espera agotado al intentar obtener la tasa de cambio", e);
+            return ResponseEntity.status(504).body(e.getMessage());
         } catch (Exception e) {
+            logger.error("Error inesperado al procesar la conversión de moneda", e);
             return ResponseEntity.status(500).body("Error en la conversión: " + e.getMessage());
         }
     }

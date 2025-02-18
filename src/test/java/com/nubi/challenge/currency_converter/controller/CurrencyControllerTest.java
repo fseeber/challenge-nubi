@@ -1,10 +1,8 @@
-package com.nubi.challenge.currency_converter;
+package com.nubi.challenge.currency_converter.controller;
 
-import com.nubi.challenge.currency_converter.controller.CurrencyController;
 import com.nubi.challenge.currency_converter.exception.ApiTimeoutException;
 import com.nubi.challenge.currency_converter.exception.InvalidAmountException;
 import com.nubi.challenge.currency_converter.exception.InvalidCurrencyException;
-import com.nubi.challenge.currency_converter.model.CurrencyConversionRequest;
 import com.nubi.challenge.currency_converter.service.CurrentService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
