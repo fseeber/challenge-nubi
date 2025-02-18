@@ -46,7 +46,7 @@ Una vez que la aplicación esté en funcionamiento, puedes acceder a la API en l
 ```bash
 http://localhost:8080/convert
 ```
-##Configuración
+## Configuración
 **Archivos de configuración**:
 application.properties o application.yml:
 api.access.key: La clave de acceso para la API externa de conversión de divisas.

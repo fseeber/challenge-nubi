@@ -1,5 +1,8 @@
 package com.nubi.challenge.currency_converter.controller;
 
+import java.io.IOException;
+
+import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +41,7 @@ public class CurrencyController {
     @ApiResponse(code = 500, message = "Error interno del servidor")
     })
     @PostMapping
-    public ResponseEntity<String> convertCurrency(@RequestBody CurrencyConversionRequest request) {
+    public ResponseEntity<String> convertCurrency(@RequestBody CurrencyConversionRequest request) throws InvalidAmountException, InvalidCurrencyException, ApiTimeoutException, HttpStatusCodeException{
         try {
             String conversionResult = currencyService.convertCurrency(request.getBaseCurrency(), request.getTargetCurrency(), request.getAmount());
             logger.debug("Resultado de conversión: {}", conversionResult);
@@ -61,7 +64,7 @@ public class CurrencyController {
             return ResponseEntity.status(500).body("Error al procesar la conversión.");
         } catch (Exception e) {
             logger.error("Error inesperado al procesar la conversión: {}", e.getMessage(), e);
-            return ResponseEntity.status(500).body("Error interno del servidor.");
+            return ResponseEntity.status(500).body("Error interno del servidor."+ e.getMessage());
         }
     }
 }

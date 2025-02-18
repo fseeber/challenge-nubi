@@ -40,20 +40,7 @@ public class CurrentServiceImpl implements CurrentService {
         this.restTemplate = restTemplate;
     }
 
-    /**
-     * Convierte una cantidad de una moneda base a una moneda objetivo.
-     * 
-     * @param baseCurrency La moneda base (ej: "USD").
-     * @param targetCurrency La moneda objetivo (ej: "EUR").
-     * @param amount El monto a convertir.
-     * @return El resultado de la conversión en un formato legible.
-     * @throws IOException En caso de error de I/O.
-     * @throws JSONException En caso de error al procesar el JSON.
-     * @throws InvalidCurrencyException Si alguna de las monedas no es válida.
-     * @throws InvalidAmountException Si el monto no es válido.
-     * @throws ApiTimeoutException Si la API externa excede el tiempo de espera.
-     */
-    public String convertCurrency(String baseCurrency, String targetCurrency, double amount) throws IOException, JSONException {
+    public String convertCurrency(String baseCurrency, String targetCurrency, double amount) throws IOException, JSONException, InvalidCurrencyException {
         logger.info("Iniciando conversión de moneda desde {} a {} con un monto de {}", baseCurrency, targetCurrency, amount);
 
         try {
@@ -84,15 +71,18 @@ public class CurrentServiceImpl implements CurrentService {
             logger.info("Conversión exitosa: {}", result);
             return result;
         
-        } catch (HttpStatusCodeException e) {  
+        } catch (HttpStatusCodeException e) {
             logger.error("Error HTTP al obtener datos de la API externa: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
             throw new RuntimeException("Error HTTP: " + e.getStatusCode());
         } catch (JSONException e) {
             logger.error("Error al procesar la respuesta JSON de la API: {}", e.getMessage(), e);
             throw new RuntimeException("Error al procesar el JSON: " + e.getMessage());
-        } catch (ResourceAccessException  e) {
+        } catch (ResourceAccessException e) {
             logger.error("Error: La API externa no respondió a tiempo", e);
             throw new ApiTimeoutException("La API externa no respondió a tiempo.");
+        } catch (InvalidCurrencyException | InvalidAmountException e) {
+            logger.warn("Error en la conversión: {}", e.getMessage(), e);
+            throw new InvalidCurrencyException("Moneda o monto no válido: " + baseCurrency + " o " + targetCurrency);
         } catch (Exception e) {
             logger.error("Error inesperado al realizar la conversión: {}", e.getMessage(), e);
             throw new RuntimeException("Error desconocido: " + e.getMessage());
