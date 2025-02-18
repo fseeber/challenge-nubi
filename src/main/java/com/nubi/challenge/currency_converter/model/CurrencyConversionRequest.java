@@ -1,5 +1,5 @@
 package com.nubi.challenge.currency_converter.model;
-
+//TODO lombok
 public class CurrencyConversionRequest {
     private double amount;
     private String baseCurrency;
